@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DentAssist.Models.Entities.Turno>
+
+@{
+    ViewData["Title"] = "Gestión de Turnos";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">📅 Gestión de Turnos</h2>
+
+    <!-- Filtros -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label class="form-label">Filtrar por Odontólogo:</label>
+            <select name="odontologoId" class="form-select" asp-items="ViewBag.OdontologoId">
+                <option value="">-- Todos --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Filtrar por Fecha:</label>
+            <input type="date" name="fecha" class="form-control" />
+        </div>
+        <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-primary">🔍 Buscar</button>
+        </div>
+        <div class="col-md-2 d-grid">
+            <a href="/Turno" class="btn btn-secondary">❌ Limpiar</a>
+        </div>
+    </form>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">➕ Crear nuevo turno</a>
+    </p>
+
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-light">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FechaHora)</th>
+                <th>@Html.DisplayNameFor(model => model.DuracionMinutos)</th>
+                <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                <th>Paciente</th>
+                <th>Odontólogo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No se encontraron turnos.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@item.DuracionMinutos min</td>
+                        <td>@item.Estado</td>
+                        <td>@item.Paciente?.Nombre</td>
+                        <td>@item.Odontologo?.Nombre</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdTurno" class="btn btn-sm btn-warning">✏️</a>
+                            <a asp-action="Details" asp-route-id="@item.IdTurno" class="btn btn-sm btn-info">🔎</a>
+                            <a asp-action="Delete" asp-route-id="@item.IdTurno" class="btn btn-sm btn-danger">🗑️</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

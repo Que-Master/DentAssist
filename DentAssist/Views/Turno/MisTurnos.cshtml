@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DentAssist.Models.Entities.Turno>
+@{
+    ViewData["Title"] = "Mis Turnos";
+    var odontologoNombre = ViewData["NombreOdontologo"] as string;
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">📅 Turnos de @odontologoNombre</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No tienes turnos asignados por ahora.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Paciente</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var turno in Model)
+                {
+                    <tr>
+                        <td>@turno.FechaHora.ToString("dd/MM/yyyy")</td>
+                        <td>@turno.FechaHora.ToString("HH:mm")</td>
+                        <td>@turno.Paciente?.Nombre</td>
+                        <td>@turno.Estado</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

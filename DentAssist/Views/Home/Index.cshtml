@@ -1,0 +1,49 @@
+﻿@model List<DentAssist.Models.Entities.Turno>
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container mt-4">
+
+    <!-- BIENVENIDA -->
+    <div class="text-center mb-4">
+        <h1 class="display-5">Bienvenido a DentAssist</h1>
+        <p class="lead">Selecciona tu perfil para continuar.</p>
+    </div>
+
+    <hr />
+
+    <!-- TABLA DE TURNOS PRÓXIMOS -->
+    <h4 class="mt-5">📅 Próximos turnos</h4>
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Paciente</th>
+                <th>Odontólogo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr><td colspan="5" class="text-center text-muted">No hay turnos programados.</td></tr>
+            }
+            else
+            {
+                foreach (var turno in Model)
+                {
+                    <tr>
+                        <td>@turno.FechaHora.ToString("dd/MM/yyyy")</td>
+                        <td>@turno.FechaHora.ToString("HH:mm")</td>
+                        <td>@turno.Paciente?.Nombre</td>
+                        <td>@turno.Odontologo?.Nombre</td>
+                        <td>@turno.Estado</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

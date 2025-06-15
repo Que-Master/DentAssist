@@ -20,6 +20,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: Odontologo/Login
+        // Muestra la vista de inicio de sesión del odontólogo (GET
         [HttpGet]
         public IActionResult Login()
         {
@@ -27,7 +28,7 @@ namespace DentAssist.Controllers
             return View("Login");
         }
 
-
+        // Procesa el formulario de inicio de sesión del odontólogo (POST)
         [HttpPost]
         public IActionResult Login(string email, string contrasenia)
         {
@@ -43,23 +44,27 @@ namespace DentAssist.Controllers
             // Guardamos en sesión el ID del odontólogo
             HttpContext.Session.SetString("OdontologoId", odontologo.IdOdontologo.ToString());
 
+            // Redirige al menú principal del odontólogo
             return RedirectToAction("Menu");
         }
 
 
         // GET: Odontologo/Menu
+        // Muestra la vista del menú principal del odontólogo
         public IActionResult Menu()
         {
             return View();
         }
 
         // GET: Odontologo
+        // Lista todos los odontólogos registrados
         public async Task<IActionResult> Index()
         {
             return View(await _context.Odontologos.ToListAsync());
         }
 
         // GET: Odontologo/Details/5
+        // Muestra los detalles de un odontólogo por su ID
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -78,14 +83,14 @@ namespace DentAssist.Controllers
         }
 
         // GET: Odontologo/Create
+        // Muestra el formulario para registrar un nuevo odontólogo
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Odontologo/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Procesa el registro de un nuevo odontólogo (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdOdontologo,Nombre,Matricula,Especialidad,Email")] Odontologo odontologo)
@@ -101,6 +106,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: Odontologo/Edit/5
+        // Muestra el formulario para editar un odontólogo existente
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -119,6 +125,7 @@ namespace DentAssist.Controllers
         // POST: Odontologo/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Procesa la edición del odontólogo (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("IdOdontologo,Nombre,Matricula,Especialidad,Email")] Odontologo odontologo)
@@ -152,6 +159,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: Odontologo/Delete/5
+        // Muestra la vista para confirmar la eliminación de un odontólogo
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -170,6 +178,7 @@ namespace DentAssist.Controllers
         }
 
         // POST: Odontologo/Delete/5
+        // Elimina el odontólogo de la base de datos (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -183,7 +192,7 @@ namespace DentAssist.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        // Verifica si un odontólogo existe por su ID
         private bool OdontologoExists(Guid id)
         {
             return _context.Odontologos.Any(e => e.IdOdontologo == id);

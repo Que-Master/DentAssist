@@ -16,7 +16,6 @@ namespace DentAssist.Controllers
 
 
         [HttpPost]
-        [HttpPost]
         public IActionResult Login(string email, string contrasenia)
         {
             if (email == AdminEmail && contrasenia == AdminContrasenia)

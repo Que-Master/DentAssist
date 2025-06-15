@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace DentAssist.Models.Entities
 {
@@ -16,7 +17,7 @@ namespace DentAssist.Models.Entities
         public string Descripcion { get; set; }
 
         [Required]
-
+        [Precision(10, 2)]
         public decimal PrecioEstimado { get; set; }
 
         public ICollection<PasoTratamiento> Pasos { get; set; }

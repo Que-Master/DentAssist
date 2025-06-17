@@ -24,7 +24,7 @@ namespace DentAssist.Models.Entities
         [StringLength(100)]
         public string Email { get; set; }
 
-        [Required]
+        
         public string Contrasenia { get; set; }
 
         public ICollection<Turno> Turnos { get; set; }

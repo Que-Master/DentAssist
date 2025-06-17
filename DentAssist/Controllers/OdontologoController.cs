@@ -43,7 +43,7 @@ namespace DentAssist.Controllers
 
             // Guardamos en sesión el ID del odontólogo
             HttpContext.Session.SetString("OdontologoId", odontologo.IdOdontologo.ToString());
-
+            HttpContext.Session.SetString("Rol", "Odontologo");
             // Redirige al menú principal del odontólogo
             return RedirectToAction("Menu");
         }
@@ -91,10 +91,24 @@ namespace DentAssist.Controllers
 
         // POST: Odontologo/Create
         // Procesa el registro de un nuevo odontólogo (POST)
+        // POST: Odontologo/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdOdontologo,Nombre,Matricula,Especialidad,Email")] Odontologo odontologo)
+        public async Task<IActionResult> Create([Bind("IdOdontologo,Nombre,Matricula,Especialidad,Email,Contrasenia")] Odontologo odontologo)
         {
+            // Admin fijo (puedes mover esto a una constante si quieres)
+            string adminEmail = "admin@dentassist.cl";
+
+            bool correoUsado = await _context.Odontologos.AnyAsync(o => o.Email == odontologo.Email)
+                || await _context.Recepcionistas.AnyAsync(r => r.Email == odontologo.Email)
+                || odontologo.Email == adminEmail;
+
+            if (correoUsado)
+            {
+                ModelState.AddModelError("Email", "Este correo ya está registrado por otro usuario.");
+                return View(odontologo);
+            }
+
             if (ModelState.IsValid)
             {
                 odontologo.IdOdontologo = Guid.NewGuid();
@@ -102,8 +116,12 @@ namespace DentAssist.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(odontologo);
         }
+
+
+
 
         // GET: Odontologo/Edit/5
         // Muestra el formulario para editar un odontólogo existente
@@ -139,8 +157,22 @@ namespace DentAssist.Controllers
             {
                 try
                 {
-                    _context.Update(odontologo);
+                    var odontologoOriginal = await _context.Odontologos.FindAsync(id);
+                    if (odontologoOriginal == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Solo actualizamos los campos editables
+                    odontologoOriginal.Nombre = odontologo.Nombre;
+                    odontologoOriginal.Matricula = odontologo.Matricula;
+                    odontologoOriginal.Especialidad = odontologo.Especialidad;
+                    odontologoOriginal.Email = odontologo.Email;
+
+                    _context.Update(odontologoOriginal);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -153,10 +185,10 @@ namespace DentAssist.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(odontologo);
         }
+
 
         // GET: Odontologo/Delete/5
         // Muestra la vista para confirmar la eliminación de un odontólogo

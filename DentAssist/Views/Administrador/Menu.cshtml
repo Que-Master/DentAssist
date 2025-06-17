@@ -1,28 +1,66 @@
 ﻿@{
-    ViewData["Title"] = "Panel Administrador";
+    ViewData["Title"] = "Panel de Administrador";
 }
 
 <div class="container mt-5">
-    <h2 class="mb-4">🛠 Panel de Administrador</h2>
+    <h2 class="text-center text-primary mb-5">⚙️ Panel de Administrador</h2>
 
-    <div class="list-group">
+    <div class="row g-4 justify-content-center">
 
-        <a href="/Odontologo" class="list-group-item list-group-item-action">
-            👨‍⚕️ Gestión de Odontólogos
-        </a>
-        <a href="/Recepcionista" class="btn btn-outline-success">
-            ➕ Crear nueva Recepcionista
-        </a>
-        <a href="/Tratamiento" class="list-group-item list-group-item-action">
-            🦷 Gestión de Tratamientos
-        </a>
+        <!-- Gestión de Odontólogos -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🦷 Odontólogos</h5>
+                    <p class="card-text">Agrega, edita o elimina odontólogos del sistema.</p>
+                    <a href="/Odontologo" class="btn btn-outline-primary w-100">Gestionar Odontólogos</a>
+                </div>
+            </div>
+        </div>
 
-        <a href="/Paciente" class="list-group-item list-group-item-action">
-            📋 Ver Pacientes
-        </a>
+        <!-- Gestión de Recepcionistas -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📋 Recepcionistas</h5>
+                    <p class="card-text">Gestiona el personal encargado de agendar turnos y pacientes.</p>
+                    <a href="/Recepcionista" class="btn btn-outline-primary w-100">Gestionar Recepcionistas</a>
+                </div>
+            </div>
+        </div>
 
-        <a href="/Turno" class="list-group-item list-group-item-action">
-            📅 Ver Turnos
-        </a>
+        <!-- Gestión de Tratamientos -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🗂️ Tratamientos</h5>
+                    <p class="card-text">Administra los tratamientos disponibles en la clínica.</p>
+                    <a href="/Tratamiento" class="btn btn-outline-success w-100">Ver Tratamientos</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestión de Pacientes -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">👤 Pacientes</h5>
+                    <p class="card-text">Consulta, edita y administra la información de los pacientes.</p>
+                    <a href="/Paciente" class="btn btn-outline-info w-100">Ver Pacientes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestión de Turnos -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📅 Turnos</h5>
+                    <p class="card-text">Revisa y organiza los turnos asignados a odontólogos y pacientes.</p>
+                    <a href="/Turno" class="btn btn-outline-secondary w-100">Ver Turnos</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

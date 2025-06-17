@@ -1,28 +1,56 @@
 ﻿@{
+    var idOdontologo = Context.Session.GetString("OdontologoId");
     ViewData["Title"] = "Panel Odontólogo";
 }
 
 <div class="container mt-5">
-    <h2 class="mb-4">👨‍⚕️ Panel de Odontólogo</h2>
+    <h2 class="text-center text-primary mb-5">👨‍⚕️ Bienvenido al Panel de Odontólogo</h2>
 
-    <div class="list-group">
-        <a href="/Turno" class="list-group-item list-group-item-action">
-            📅 Ver Agenda de Turnos
-        </a>
-        <a href="/PlanTratamiento" class="list-group-item list-group-item-action">
-            📝 Crear Plan de Tratamientos
-        </a>
-        <a href="/PasoTratamiento" class="list-group-item list-group-item-action">
-            ✅ Marcar Pasos Realizados
-        </a>
-        <a href="/HistorialTratamiento" class="list-group-item list-group-item-action">
-            📄 Registrar Historial de Tratamientos
-        </a>
-        <a href="/Paciente" class="list-group-item list-group-item-action">
-            🔍 Ver Fichas de Pacientes
-        </a>
-        <a href="/Turno/MisTurnos?idOdontologo=GUID_AQUI" class="btn btn-primary">
-            📅 Ver mis turnos
-         </a>
+    <div class="row justify-content-center g-4">
+
+        <!-- Ver Turnos -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📅 Ver Turnos</h5>
+                    <p class="card-text">Consulta tus turnos programados con pacientes.</p>
+                    <a href="/Turno/MisTurnos?idOdontologo=@idOdontologo" class="btn btn-outline-primary w-100">Ir a Turnos</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crear Plan de Tratamiento -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📝 Crear Plan de Tratamiento</h5>
+                    <p class="card-text">Registra nuevos planes personalizados para tus pacientes.</p>
+                    <a href="/PlanTratamiento/Create" class="btn btn-outline-success w-100">Crear Plan</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ver Planes -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📋 Ver Planes</h5>
+                    <p class="card-text">Accede a todos los planes creados y haz seguimiento del progreso.</p>
+                    <a href="/PlanTratamiento/MisPlanes" class="btn btn-outline-info w-100">Ver Planes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historial de Tratamientos -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📄 Historial Clínico</h5>
+                    <p class="card-text">Consulta y registra los historiales de tratamientos clínicos.</p>
+                    <a href="/PlanTratamiento" class="btn btn-outline-secondary w-100">Historial</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

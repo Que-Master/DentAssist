@@ -17,9 +17,10 @@ namespace DentAssist.Controllers
             _logger = logger;
             _context = context;
         }
-
+        // Muestra la pagina principal con los proximos turnos agendados
         public IActionResult Index()
         {
+            // Consulta los 10 turnos mas proximos con informacion de paciente y odontologo
             var turnosProximos = _context.Turnos
                 .Include(t => t.Paciente)
                 .Include(t => t.Odontologo)
@@ -31,15 +32,23 @@ namespace DentAssist.Controllers
             return View(turnosProximos);
         }
 
+        // Muestra la vista de politicas de privacidad
         public IActionResult Privacy()
         {
             return View();
         }
-
+        // Muestra la vista de error en caso de fallas 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

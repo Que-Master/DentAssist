@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var rol = Context.Session.GetString("Rol");
+    var esHome = Context.Request.Path == "/";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,23 +12,21 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DentAssist.styles.css" asp-append-version="true" />
 </head>
-<body style="background-color: #f0f8ff;">
-    <!-- Fondo celeste muy claro -->
+<body class="d-flex flex-column min-vh-100" style="background-color: #f0f8ff;">
 
     <header>
-        <!-- ENCABEZADO -->
         <nav class="navbar navbar-expand-sm navbar-light shadow-sm mb-4" style="background-color: #e0f0ff;">
             <div class="container d-flex justify-content-between align-items-center">
                 <a href="/" class="navbar-brand fw-bold text-primary fs-4">
                     🦷 DentAssist
                 </a>
-                <div class="d-flex gap-3">
-                    <a href="/Recepcionista/Login" class="btn btn-outline-primary">Recepcionista</a>
-                    <a href="/Odontologo/Login" class="btn btn-outline-success">Odontólogo</a>
-                    <a href="/Administrador/Login" class="btn btn-outline-dark">Administrador</a>
 
-
-                </div>
+                @if (!string.IsNullOrEmpty(rol) && !esHome)
+                {
+                    <form asp-controller="Home" asp-action="Logout" method="post" class="mb-0">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">🚪 Cerrar Sesión</button>
+                    </form>
+                }
             </div>
         </nav>
     </header>
@@ -33,7 +35,7 @@
         @RenderBody()
     </main>
 
-    <footer class="text-center text-muted py-3 mt-5" style="background-color: #e0f0ff;">
+    <footer class="text-center text-muted py-3 mt-auto" style="background-color: #e0f0ff;">
         <small>
             © 2025 - DentAssist · Sistema de Gestión Odontológica |
             <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-muted">Privacidad</a>

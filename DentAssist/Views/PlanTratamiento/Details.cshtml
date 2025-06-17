@@ -1,42 +1,66 @@
 ﻿@model DentAssist.Models.Entities.PlanTratamiento
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Plan de Tratamiento";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
+    <h2 class="mb-3">🦷 Plan de Tratamiento - @Model.Paciente?.Nombre</h2>
 
-<div>
-    <h4>PlanTratamiento</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Paciente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Paciente.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Odontologo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Odontologo.Matricula)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaCreacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaCreacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Observaciones)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Observaciones)
-        </dd>
-    </dl>
+    <p><strong>Fecha de creación:</strong> @Model.FechaCreacion.ToString("dd/MM/yyyy")</p>
+    <p><strong>Odontólogo:</strong> @Model.Odontologo?.Nombre</p>
+    <p><strong>Observaciones:</strong> @Model.Observaciones</p>
+
+    <h4 class="mt-4">📋 Pasos del Plan</h4>
+
+    @if (Model.Pasos != null && Model.Pasos.Any())
+    {
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Tratamiento</th>
+                    <th>Fecha Estimada</th>
+                    <th>Estado</th>
+                    <th>Observación</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var paso in Model.Pasos)
+                {
+                    <tr>
+                        <td>@paso.Tratamiento?.Nombre</td>
+                        <td>@(paso.FechaEstimada?.ToString("dd/MM/yyyy") ?? "-")</td>
+                        <td>
+                            @if (paso.Estado == "Pendiente")
+                            {
+                                <span class="badge bg-warning text-dark">Pendiente</span>
+                            }
+                            else if (paso.Estado == "Realizado")
+                            {
+                                <span class="badge bg-success">Realizado</span>
+                            }
+                            else if (paso.Estado == "Cancelado")
+                            {
+                                <span class="badge bg-danger">Cancelado</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@paso.Estado</span>
+                            }
+                        </td>
+                        <td>@paso.Observacion</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-muted">Este plan aún no tiene pasos registrados.</p>
+    }
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdPlan">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="text-start">
+    <a asp-controller="PlanTratamiento" asp-action="Index" class="btn btn-outline-primary">
+        ⬅️ Volver a Gestion de Planes
+    </a>
 </div>

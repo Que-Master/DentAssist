@@ -1,10 +1,10 @@
 ﻿@model DentAssist.Models.Entities.Turno
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
 <h4>Turno</h4>
 <hr />
@@ -12,16 +12,19 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="FechaHora" class="control-label"></label>
                 <input asp-for="FechaHora" class="form-control" />
                 <span asp-validation-for="FechaHora" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="DuracionMinutos" class="control-label"></label>
                 <input asp-for="DuracionMinutos" class="form-control" />
                 <span asp-validation-for="DuracionMinutos" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
                 <select asp-for="Estado" class="form-control">
@@ -32,25 +35,33 @@
                 </select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="IdPaciente" class="control-label"></label>
-                <select asp-for="IdPaciente" class ="form-control" asp-items="ViewBag.IdPaciente"></select>
+                <label asp-for="IdPaciente" class="control-label">Paciente</label>
+                <select asp-for="IdPaciente" class="form-control" asp-items="ViewBag.IdPaciente"></select>
+                <span asp-validation-for="IdPaciente" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="IdOdontologo" class="control-label"></label>
-                <select asp-for="IdOdontologo" class ="form-control" asp-items="ViewBag.IdOdontologo"></select>
+                <label asp-for="IdOdontologo" class="control-label">Odontólogo</label>
+                <select asp-for="IdOdontologo" class="form-control" asp-items="ViewBag.IdOdontologo"></select>
+                <span asp-validation-for="IdOdontologo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="form-group mt-3">
+                <input type="submit" value="➕ Crear nuevo" class="btn btn-success" /> |
+                <a asp-controller="Turno" asp-action="Index" class="btn btn-outline-primary">
+                    ⬅️ Volver a Gestion de Turnos
+                </a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

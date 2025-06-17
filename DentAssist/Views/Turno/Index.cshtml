@@ -6,27 +6,6 @@
 
 <div class="container mt-4">
     <h2 class="mb-4">📅 Gestión de Turnos</h2>
-
-    <!-- Filtros -->
-    <form method="get" class="row g-3 mb-4">
-        <div class="col-md-4">
-            <label class="form-label">Filtrar por Odontólogo:</label>
-            <select name="odontologoId" class="form-select" asp-items="ViewBag.OdontologoId">
-                <option value="">-- Todos --</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Filtrar por Fecha:</label>
-            <input type="date" name="fecha" class="form-control" />
-        </div>
-        <div class="col-md-2 d-grid">
-            <button type="submit" class="btn btn-primary">🔍 Buscar</button>
-        </div>
-        <div class="col-md-2 d-grid">
-            <a href="/Turno" class="btn btn-secondary">❌ Limpiar</a>
-        </div>
-    </form>
-
     <p>
         <a asp-action="Create" class="btn btn-success">➕ Crear nuevo turno</a>
     </p>
@@ -56,7 +35,24 @@
                     <tr>
                         <td>@item.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>@item.DuracionMinutos min</td>
-                        <td>@item.Estado</td>
+                        <td>
+                            @if (item.Estado == "Pendiente")
+                            {
+                                <span class="badge bg-warning text-dark">Pendiente</span>
+                            }
+                            else if (item.Estado == "Realizado")
+                            {
+                                <span class="badge bg-success">Realizado</span>
+                            }
+                            else if (item.Estado == "Cancelado")
+                            {
+                                <span class="badge bg-danger">Cancelado</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@item.Estado</span>
+                            }
+                        </td>
                         <td>@item.Paciente?.Nombre</td>
                         <td>@item.Odontologo?.Nombre</td>
                         <td>
@@ -70,3 +66,19 @@
         </tbody>
     </table>
 </div>
+@{
+    var rol = Context.Session.GetString("Rol");
+    string urlVolver = "";
+
+    if (rol == "Administrador")
+    {
+        urlVolver = Url.Action("Menu", "Administrador");
+    }
+    else if (rol == "Recepcionista")
+    {
+        urlVolver = Url.Action("Menu", "Recepcionista");
+    }
+}
+<a href="@urlVolver" class="btn btn-outline-primary mt-3">
+    ⬅️ Volver al Menú
+</a>

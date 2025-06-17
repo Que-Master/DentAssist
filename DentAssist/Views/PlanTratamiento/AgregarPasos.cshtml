@@ -1,0 +1,55 @@
+﻿@model DentAssist.Models.Entities.PasoTratamiento
+
+@{
+    ViewData["Title"] = "Agregar Paso al Plan";
+    var idPlan = ViewData["IdPlan"];
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">➕ Agregar Paso al Plan de Tratamiento</h2>
+
+    <form asp-action="AgregarPasos" method="post">
+        <input type="hidden" asp-for="IdPlan" value="@idPlan" />
+
+        <div class="form-group mb-3">
+            <label asp-for="IdTratamiento" class="form-label">Tratamiento</label>
+            <select asp-for="IdTratamiento" class="form-select" asp-items="ViewBag.IdTratamiento">
+                <option value="">Seleccione un tratamiento</option>
+            </select>
+            <span asp-validation-for="IdTratamiento" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="FechaEstimada" class="form-label">Fecha Estimada</label>
+            <input asp-for="FechaEstimada" type="date" class="form-control" />
+            <span asp-validation-for="FechaEstimada" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Estado" class="form-label">Estado</label>
+            <select asp-for="Estado" class="form-select">
+                <option value="Pendiente">Pendiente</option>
+                <option value="Realizado">Realizado</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+            <span asp-validation-for="Estado" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Observacion" class="form-label">Observaciones</label>
+            <textarea asp-for="Observacion" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Observacion" class="text-danger"></span>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar Paso</button>
+            <a asp-controller="Odontologo" asp-action="Menu" class="btn btn-secondary">Finalizar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

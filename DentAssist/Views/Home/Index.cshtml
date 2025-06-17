@@ -1,49 +1,58 @@
-﻿@model List<DentAssist.Models.Entities.Turno>
-
-@{
+﻿@{
     ViewData["Title"] = "Inicio";
 }
 
-<div class="container mt-4">
+<div class="container mt-5">
+    <h1 class="text-center mb-5 text-primary">Bienvenido a DentAssist 🦷</h1>
 
-    <!-- BIENVENIDA -->
-    <div class="text-center mb-4">
-        <h1 class="display-5">Bienvenido a DentAssist</h1>
-        <p class="lead">Selecciona tu perfil para continuar.</p>
+    <div class="row justify-content-center">
+        <!-- Administrador -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">👨‍💼 Administrador</h4>
+                    <p class="card-text">Accede a la gestión de odontólogos, recepcionistas, pacientes y tratamientos.</p>
+                    <a href="/Administrador/Login" class="btn btn-dark btn-lg w-100">Ingresar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Odontólogo -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">🦷 Odontólogo</h4>
+                    <p class="card-text">Consulta tus turnos, crea y gestiona planes de tratamiento para tus pacientes.</p>
+                    <a href="/Odontologo/Login" class="btn btn-success btn-lg w-100">Ingresar</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">📋 Recepcionista</h4>
+                    <p class="card-text">Administra turnos y gestiona la información de los pacientes de forma eficiente.</p>
+                    <a href="/Recepcionista/Login" class="btn btn-primary btn-lg w-100">Ingresar</a>
+                </div>
+            </div>
+        </div>
+       
+        <hr class="my-5" />
+        <h2 class="text-center text-primary mb-4">¿Qué es DentAssist?</h2>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="fs-5">
+                    <strong>DentAssist</strong> es un sistema web diseñado para facilitar y centralizar la gestión clínica en centros odontológicos. Su objetivo es optimizar la organización, seguimiento y atención de pacientes a través de herramientas intuitivas para cada perfil:
+                </p>
+                <ul class="list-unstyled fs-5">
+                    <li>✔️ Administración completa de pacientes y turnos</li>
+                    <li>✔️ Creación de planes de tratamiento por odontólogo</li>
+                    <li>✔️ Seguimiento detallado de pasos clínicos</li>
+                    <li>✔️ Control de roles (Administrador, Odontólogo, Recepcionista)</li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-    <hr />
-
-    <!-- TABLA DE TURNOS PRÓXIMOS -->
-    <h4 class="mt-5">📅 Próximos turnos</h4>
-    <table class="table table-bordered table-hover mt-3">
-        <thead class="table-light">
-            <tr>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Paciente</th>
-                <th>Odontólogo</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Count == 0)
-            {
-                <tr><td colspan="5" class="text-center text-muted">No hay turnos programados.</td></tr>
-            }
-            else
-            {
-                foreach (var turno in Model)
-                {
-                    <tr>
-                        <td>@turno.FechaHora.ToString("dd/MM/yyyy")</td>
-                        <td>@turno.FechaHora.ToString("HH:mm")</td>
-                        <td>@turno.Paciente?.Nombre</td>
-                        <td>@turno.Odontologo?.Nombre</td>
-                        <td>@turno.Estado</td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
 </div>

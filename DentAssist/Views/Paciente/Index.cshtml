@@ -1,59 +1,56 @@
 ﻿@model IEnumerable<DentAssist.Models.Entities.Paciente>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pacientes";
 }
+<div class="container mt-4">
+    <h2 class="mb-4">👥 Lista de Pacientes</h2>
 
-<h1>Index</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-success">➕ Agregar Paciente</a>
+    </p>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RUT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RUT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPaciente">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPaciente">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPaciente">Delete</a>
-            </td>
-        </tr>
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paciente in Model)
+            {
+                <tr>
+                    <td>@paciente.Nombre</td>
+                    <td>@paciente.Email</td>
+                    <td>@paciente.Telefono</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@paciente.IdPaciente" class="btn btn-sm btn-info">🔍</a>
+                        <a asp-action="Edit" asp-route-id="@paciente.IdPaciente" class="btn btn-sm btn-warning">✏️</a>
+                        <a asp-action="Delete" asp-route-id="@paciente.IdPaciente" class="btn btn-sm btn-danger">🗑️</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@{
+    var rol = Context.Session.GetString("Rol");
+    string urlVolver = "";
+
+    if (rol == "Administrador")
+    {
+        urlVolver = Url.Action("Menu", "Administrador");
+    }
+    else if (rol == "Recepcionista")
+    {
+        urlVolver = Url.Action("Menu", "Recepcionista");
+    }
 }
-    </tbody>
-</table>
+<a href="@urlVolver" class="btn btn-outline-primary mt-3">
+    ⬅️ Volver al Menú
+</a>
+

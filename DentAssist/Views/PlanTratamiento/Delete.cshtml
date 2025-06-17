@@ -4,9 +4,9 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Eliminar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Seguro que deseas eliminar este Plan?</h3>
 <div>
     <h4>PlanTratamiento</h4>
     <hr />
@@ -39,7 +39,9 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdPlan" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="🗑️ Eliminar" class="btn btn-danger" /> |
+        <a asp-controller="PlanTratamiento" asp-action="Index" class="btn btn-outline-primary">
+            ⬅️ Volver a Gestion de Planes
+        </a>
     </form>
 </div>

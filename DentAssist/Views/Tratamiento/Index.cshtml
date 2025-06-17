@@ -1,47 +1,58 @@
 ﻿@model IEnumerable<DentAssist.Models.Entities.Tratamiento>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tratamientos";
 }
 
-<h1>Index</h1>
+<h1>Gestión de Tratamientos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">➕ Crear nuevo</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-bordered table-hover shadow-sm">
+    <thead class="table-light">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioEstimado)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+            <th>@Html.DisplayNameFor(model => model.PrecioEstimado)</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioEstimado)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdTratamiento">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdTratamiento">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdTratamiento">Delete</a>
-            </td>
-        </tr>
-}
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted">No se encontraron tratamientos registrados.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Descripcion</td>
+                    <td>$@item.PrecioEstimado</td>
+                    <td class="text-nowrap">
+                        <a asp-action="Edit" asp-route-id="@item.IdTratamiento" class="btn btn-sm btn-warning me-1">
+                            ✏️ Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdTratamiento" class="btn btn-sm btn-info me-1 text-white">
+                            🔍 Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdTratamiento" class="btn btn-sm btn-danger">
+                            🗑️ Eliminar
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
+
+<div class="text-start">
+    <a asp-controller="Administrador" asp-action="Menu" class="btn btn-outline-primary">
+        ⬅️ Volver al Menú de Administrador
+    </a>
+</div>

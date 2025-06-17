@@ -1,10 +1,10 @@
 ﻿@model DentAssist.Models.Entities.Tratamiento
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
     <h4>Tratamiento</h4>
@@ -30,7 +30,8 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdTratamiento">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="text-start">
+    <a asp-controller="Tratamiento" asp-action="Index" class="btn btn-outline-primary">
+        ⬅️ Volver a Gestion de Tratamientos
+    </a>
 </div>

@@ -1,0 +1,47 @@
+﻿@model List<DentAssist.Models.Entities.PlanTratamiento>
+
+@{
+    ViewData["Title"] = "Mis Planes de Tratamiento";
+}
+
+<h2>🦷 Mis Planes de Tratamiento</h2>
+
+@foreach (var plan in Model)
+{
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            Plan para: @plan.Paciente.Nombre (@plan.FechaCreacion.ToShortDateString())
+        </div>
+        <div class="card-body">
+            <p><strong>Observaciones:</strong> @plan.Observaciones</p>
+            <h5>Pasos:</h5>
+            <ul class="list-group">
+                @foreach (var paso in plan.Pasos)
+                {
+                    <li class="list-group-item">
+                        <form asp-controller="PasoTratamiento" asp-action="ActualizarEstado" method="post" class="d-flex align-items-center gap-3">
+                            <input type="hidden" name="idPaso" value="@paso.IdPaso" />
+
+                            <div>
+                                <strong>@paso.Tratamiento?.Nombre</strong><br />
+                                <small>@paso.Observacion</small><br />
+                                Fecha estimada: @paso.FechaEstimada?.ToShortDateString()
+                            </div>
+
+                            <div>
+                                <select name="nuevoEstado" class="form-select form-select-sm">
+                                    <option value="pendiente" selected="@((paso.Estado == "pendiente") ? "selected" : null)">pendiente</option>
+                                    <option value="realizado" selected="@((paso.Estado == "realizado") ? "selected" : null)">realizado</option>
+                                    <option value="cancelado" selected="@((paso.Estado == "cancelado") ? "selected" : null)">cancelado</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                        </form>
+                    </li>
+
+                }
+            </ul>
+        </div>
+    </div>
+}

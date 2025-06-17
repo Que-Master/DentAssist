@@ -1,10 +1,10 @@
 ﻿@model DentAssist.Models.Entities.Tratamiento
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
 <h4>Tratamiento</h4>
 <hr />
@@ -28,15 +28,16 @@
                 <span asp-validation-for="PrecioEstimado" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="➕ Crear nuevo" class="btn btn-success"> |
+                <a asp-controller="Tratamiento" asp-action="Index" class="btn btn-outline-primary">
+                    ⬅️ Volver a Gestion de Tratamientos
+                </a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

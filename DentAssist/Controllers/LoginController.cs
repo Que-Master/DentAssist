@@ -14,6 +14,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: /Login
+        // Muestra la vista de login segun el rol proporcionado por parametro
         [HttpGet]
         public IActionResult Index(string rol)
         {
@@ -21,25 +22,33 @@ namespace DentAssist.Controllers
             return View();
         }
 
-        // POST: /Login
+        // Muestra el formulario de inicio de sesion (GET)
         [HttpGet]
         public IActionResult Login() => View();
 
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var odontologo = _context.Odontologos
                 .FirstOrDefault(o => o.Email == model.Email && o.Contrasenia == model.Contrasenia);
 
             if (odontologo == null)
             {
                 ModelState.AddModelError("", "Correo o contraseña incorrectos.");
-                return View();
+                return View(model);
             }
 
-            HttpContext.Session.SetString("OdontologoId", odontologo.IdOdontologo.ToString());
+            // Guarda el ID del odontólogo en la sesión
+            HttpContext.Session.SetString("IdOdontologo", odontologo.IdOdontologo.ToString());
+
             return RedirectToAction("Menu");
         }
+
 
     }
 }

@@ -20,13 +20,19 @@ namespace DentAssist.Controllers
         }
 
         // GET: HistorialTratamiento
+        // Muestra la lista de todos los historiales de tratamiento
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.HistorialTratamientos.Include(h => h.Odontologo).Include(h => h.Paciente).Include(h => h.PasoTratamiento).Include(h => h.Tratamiento);
+            var appDbContext = _context.HistorialTratamientos
+                .Include(h => h.Odontologo)
+                .Include(h => h.Paciente)
+                .Include(h => h.PasoTratamiento)
+                .Include(h => h.Tratamiento);
             return View(await appDbContext.ToListAsync());
         }
 
         // GET: HistorialTratamiento/Details/5
+        // Muestra los detalles de un historial de tratamiento especifico
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -49,6 +55,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: HistorialTratamiento/Create
+        // Muestra el formulario para crear un nuevo historial de tratamiento
         public IActionResult Create()
         {
             ViewData["IdOdontologo"] = new SelectList(_context.Odontologos, "IdOdontologo", "Matricula");
@@ -61,6 +68,7 @@ namespace DentAssist.Controllers
         // POST: HistorialTratamiento/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Procesa el formulario de creacion de historial de tratamiento
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdHistorial,IdPaciente,IdTratamiento,IdOdontologo,FechaRealizada,Observacion,IdPasoTratamiento")] HistorialTratamiento historialTratamiento)
@@ -80,6 +88,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: HistorialTratamiento/Edit/5
+        // Muestra el formulario para editar un historial de tratamiento existente
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -102,6 +111,7 @@ namespace DentAssist.Controllers
         // POST: HistorialTratamiento/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Procesa la edicion de un historial de tratamiento
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("IdHistorial,IdPaciente,IdTratamiento,IdOdontologo,FechaRealizada,Observacion,IdPasoTratamiento")] HistorialTratamiento historialTratamiento)
@@ -139,6 +149,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: HistorialTratamiento/Delete/5
+        // Muestra la vista de confirmacion para eliminar un historial de tratamiento
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -161,6 +172,7 @@ namespace DentAssist.Controllers
         }
 
         // POST: HistorialTratamiento/Delete/5
+        // Elimina definitivamente el historial de tratamiento (tras la confirmacion)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -174,7 +186,7 @@ namespace DentAssist.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        // Verifica si un historial de tratamiento con ese ID existe
         private bool HistorialTratamientoExists(Guid id)
         {
             return _context.HistorialTratamientos.Any(e => e.IdHistorial == id);

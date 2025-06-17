@@ -3,15 +3,42 @@
 }
 
 <div class="container mt-5">
-    <h2 class="mb-4">👩‍💼 Panel de Recepcionista</h2>
+    <h2 class="text-center text-primary mb-5">👩‍💼 Panel de Recepcionista</h2>
 
-    <div class="list-group">
-        <a href="/Paciente" class="list-group-item list-group-item-action">
-            📋 Gestión de Pacientes
-        </a>
-        <a href="/Turno" class="list-group-item list-group-item-action">
-            📅 Gestión de Turnos
-        </a>
-        <!-- Agrega más si necesitas -->
+    <div class="row g-4 justify-content-center">
+
+        <!-- Gestión de Turnos -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📅 Gestión de Turnos</h5>
+                    <p class="card-text">Administra los turnos entre pacientes y odontólogos.</p>
+                    <a href="/Turno" class="btn btn-outline-primary w-100">Ver Turnos</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestión de Pacientes -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">👥 Gestión de Pacientes</h5>
+                    <p class="card-text">Consulta y edita los datos de los pacientes registrados.</p>
+                    <a href="/Paciente" class="btn btn-outline-success w-100">Ver Pacientes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Turnos Próximos -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">⏳ Turnos Próximos</h5>
+                    <p class="card-text">Revisa los turnos agendados para los próximos días.</p>
+                    <a href="/Turno/TurnosProximos" class="btn btn-outline-info w-100">Ver Turnos Próximos</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

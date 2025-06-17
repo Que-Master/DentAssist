@@ -20,6 +20,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: Paciente
+        // Muestra la lista de pacientes registrados
         public async Task<IActionResult> Index()
         {
             var pacientes = await _context.Pacientes.ToListAsync();
@@ -27,6 +28,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: Paciente/Details/5
+        // Muestra los detalles de un paciente especifico
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -45,6 +47,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: Paciente/Create
+        // Muestra el formulario para crear un nuevo paciente
         public IActionResult Create()
         {
             return View();
@@ -53,6 +56,7 @@ namespace DentAssist.Controllers
         // POST: Paciente/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Procesa el formulario para crear un nuevo paciente
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdPaciente,Nombre,RUT,Telefono,Email,Direccion")] Paciente paciente)
@@ -64,10 +68,11 @@ namespace DentAssist.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            return View(paciente); // Si hay errores, vuelve al formulario
         }
 
         // GET: Paciente/Edit/5
+        // Muestra el formulario para editar un paciente existente
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -86,6 +91,7 @@ namespace DentAssist.Controllers
         // POST: Paciente/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Procesa la edicion del paciente
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("IdPaciente,Nombre,RUT,Telefono,Email,Direccion")] Paciente paciente)
@@ -119,6 +125,7 @@ namespace DentAssist.Controllers
         }
 
         // GET: Paciente/Delete/5
+        // Muestra una vista para confirmar la eliminacion de un paciente
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -137,6 +144,7 @@ namespace DentAssist.Controllers
         }
 
         // POST: Paciente/Delete/5
+        // Elimina definitivamente el paciente (tras la confirmacion)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -151,6 +159,7 @@ namespace DentAssist.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Verifica si un paciente con ese ID existe
         private bool PacienteExists(Guid id)
         {
             return _context.Pacientes.Any(e => e.IdPaciente == id);

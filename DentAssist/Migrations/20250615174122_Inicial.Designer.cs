@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DentAssist.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250615163249_Inicial")]
+    [Migration("20250615174122_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />

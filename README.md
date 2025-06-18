@@ -76,7 +76,7 @@ Credenciales iniciales:
 
 Email: admin@dentassist.cl
 
-Contraseña: Admin123!
+Contraseña: admin123
 
 Este administrador puede crear odontólogos y recepcionistas desde el panel de administrador.
 

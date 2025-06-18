@@ -19,7 +19,7 @@ namespace DentAssist.Controllers
             _context = context;
         }
 
-        // GET: Paciente
+        
         // Muestra la lista de pacientes registrados
         public async Task<IActionResult> Index()
         {
@@ -27,8 +27,9 @@ namespace DentAssist.Controllers
             return View(pacientes);
         }
 
-        // GET: Paciente/Details/5
-        // Muestra los detalles de un paciente especifico
+        
+        // Muestra los detalles de un paciente específico
+        // Parámetro id: Id del paciente a buscar
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -46,17 +47,16 @@ namespace DentAssist.Controllers
             return View(paciente);
         }
 
-        // GET: Paciente/Create
+        
         // Muestra el formulario para crear un nuevo paciente
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Paciente/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         // Procesa el formulario para crear un nuevo paciente
+        // Parámetro paciente: Datos ingresados en el formulario
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdPaciente,Nombre,RUT,Telefono,Email,Direccion")] Paciente paciente)
@@ -68,11 +68,12 @@ namespace DentAssist.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente); // Si hay errores, vuelve al formulario
+            return View(paciente);
         }
 
-        // GET: Paciente/Edit/5
+        
         // Muestra el formulario para editar un paciente existente
+        // Parámetro id: Id del paciente a editar
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -88,10 +89,11 @@ namespace DentAssist.Controllers
             return View(paciente);
         }
 
-        // POST: Paciente/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // Procesa la edicion del paciente
+        
+        // Procesa la edición de un paciente
+        // Parámetros:
+        //   id: Id del paciente a modificar
+        //   paciente: Datos modificados del paciente
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("IdPaciente,Nombre,RUT,Telefono,Email,Direccion")] Paciente paciente)
@@ -124,8 +126,9 @@ namespace DentAssist.Controllers
             return View(paciente);
         }
 
-        // GET: Paciente/Delete/5
-        // Muestra una vista para confirmar la eliminacion de un paciente
+        
+        // Muestra la confirmación para eliminar un paciente
+        // Parámetro id: Id del paciente a eliminar
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -143,8 +146,9 @@ namespace DentAssist.Controllers
             return View(paciente);
         }
 
-        // POST: Paciente/Delete/5
-        // Elimina definitivamente el paciente (tras la confirmacion)
+        
+        // Elimina definitivamente el paciente después de confirmar
+        // Parámetro id: Id del paciente a eliminar
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -159,7 +163,8 @@ namespace DentAssist.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Verifica si un paciente con ese ID existe
+        // Verifica si un paciente con el Id especificado existe en la base de datos
+        // Parámetro id: Id del paciente a verificar
         private bool PacienteExists(Guid id)
         {
             return _context.Pacientes.Any(e => e.IdPaciente == id);

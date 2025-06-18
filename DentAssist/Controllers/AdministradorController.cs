@@ -20,10 +20,10 @@ namespace DentAssist.Controllers
         [HttpPost]
         public IActionResult Login(string email, string contrasenia)
         {
-            HttpContext.Session.SetString("Rol", "Administrador");
             // Verifica si las credenciales son correctas
             if (email == AdminEmail && contrasenia == AdminContrasenia)
             {
+                HttpContext.Session.SetString("Rol", "Administrador");
                 return RedirectToAction("Menu");
             }
 

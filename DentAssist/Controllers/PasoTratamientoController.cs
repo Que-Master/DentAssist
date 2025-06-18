@@ -19,35 +19,35 @@ namespace DentAssist.Controllers
             _context = context;
         }
 
-        // GET: PasoTratamiento
+        
         // Muestra todos los pasos de tratamiento registrados, incluyendo los datos del tratamiento y plan asociados
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.PasoTratamientos.Include(p => p.Plan).Include(p => p.Tratamiento);
+            var appDbContext = _context.PasoTratamientos
+                .Include(p => p.Plan)
+                .Include(p => p.Tratamiento);
             return View(await appDbContext.ToListAsync());
         }
 
-        // GET: PasoTratamiento/Details/5
-        // Muestra los detalles de un paso de tratamiento especifico
+        
+        // Muestra los detalles de un paso de tratamiento específico
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var pasoTratamiento = await _context.PasoTratamientos
                 .Include(p => p.Plan)
                 .Include(p => p.Tratamiento)
                 .FirstOrDefaultAsync(m => m.IdPaso == id);
+
             if (pasoTratamiento == null)
-            {
                 return NotFound();
-            }
 
             return View(pasoTratamiento);
         }
 
+        // Permite cambiar el estado de un paso de tratamiento (por ejemplo: Pendiente, En Proceso, Completado)
         [HttpPost]
         public async Task<IActionResult> ActualizarEstado(Guid idPaso, string nuevoEstado)
         {
@@ -61,6 +61,8 @@ namespace DentAssist.Controllers
             return RedirectToAction("MisPlanes", "PlanTratamiento");
         }
 
+        
+        // Muestra el formulario para agregar un nuevo paso a un plan de tratamiento específico
         public IActionResult AgregarPasos(Guid idPlan)
         {
             ViewData["IdTratamiento"] = new SelectList(_context.Tratamientos, "IdTratamiento", "Nombre");
@@ -68,7 +70,8 @@ namespace DentAssist.Controllers
             return View();
         }
 
-
+        
+        // Guarda un nuevo paso al plan de tratamiento y permite seguir agregando más pasos
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AgregarPasos(PasoTratamiento paso)
@@ -78,7 +81,6 @@ namespace DentAssist.Controllers
                 paso.IdPaso = Guid.NewGuid();
                 _context.PasoTratamientos.Add(paso);
                 await _context.SaveChangesAsync();
-                // Puedes redirigir a la misma vista para seguir agregando más pasos
                 return RedirectToAction("AgregarPasos", new { idPlan = paso.IdPlan });
             }
 
@@ -87,9 +89,8 @@ namespace DentAssist.Controllers
             return View(paso);
         }
 
-
-        // GET: PasoTratamiento/Create
-        // Retorna la vista para crear un nuevo paso de tratamiento
+        
+        // Muestra el formulario para registrar un nuevo paso de tratamiento
         public IActionResult Create()
         {
             ViewData["IdPlan"] = new SelectList(_context.PlanTratamientos, "IdPlan", "IdPlan");
@@ -97,10 +98,8 @@ namespace DentAssist.Controllers
             return View();
         }
 
-        // POST: PasoTratamiento/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // Recibe los datos del formulario y guarda un nuevo paso de tratamiento
+        
+        // Guarda un nuevo paso de tratamiento en la base de datos
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdPaso,IdPlan,IdTratamiento,FechaEstimada,Estado,Observacion")] PasoTratamiento pasoTratamiento)
@@ -112,42 +111,35 @@ namespace DentAssist.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["IdPlan"] = new SelectList(_context.PlanTratamientos, "IdPlan", "IdPlan", pasoTratamiento.IdPlan);
             ViewData["IdTratamiento"] = new SelectList(_context.Tratamientos, "IdTratamiento", "Nombre", pasoTratamiento.IdTratamiento);
             return View(pasoTratamiento);
         }
 
-        // GET: PasoTratamiento/Edit/5
-        // Muestra la vista de edicion de un paso de tratamiento
+        // Muestra el formulario para editar un paso de tratamiento
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var pasoTratamiento = await _context.PasoTratamientos.FindAsync(id);
             if (pasoTratamiento == null)
-            {
                 return NotFound();
-            }
+
             ViewData["IdPlan"] = new SelectList(_context.PlanTratamientos, "IdPlan", "IdPlan", pasoTratamiento.IdPlan);
             ViewData["IdTratamiento"] = new SelectList(_context.Tratamientos, "IdTratamiento", "Nombre", pasoTratamiento.IdTratamiento);
             return View(pasoTratamiento);
         }
 
-        // POST: PasoTratamiento/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // Procesa la edicion del paso de tratamiento
+        
+        // Guarda los cambios realizados a un paso de tratamiento
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("IdPaso,IdPlan,IdTratamiento,FechaEstimada,Estado,Observacion")] PasoTratamiento pasoTratamiento)
         {
             if (id != pasoTratamiento.IdPaso)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -159,59 +151,51 @@ namespace DentAssist.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!PasoTratamientoExists(pasoTratamiento.IdPaso))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["IdPlan"] = new SelectList(_context.PlanTratamientos, "IdPlan", "IdPlan", pasoTratamiento.IdPlan);
             ViewData["IdTratamiento"] = new SelectList(_context.Tratamientos, "IdTratamiento", "Nombre", pasoTratamiento.IdTratamiento);
             return View(pasoTratamiento);
         }
 
-        // GET: PasoTratamiento/Delete/5
-        // Muestra una vista para confirmar la eliminacion de un paso de tratamiento
+        
+        // Muestra la vista para confirmar la eliminación de un paso de tratamiento
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var pasoTratamiento = await _context.PasoTratamientos
                 .Include(p => p.Plan)
                 .Include(p => p.Tratamiento)
                 .FirstOrDefaultAsync(m => m.IdPaso == id);
+
             if (pasoTratamiento == null)
-            {
                 return NotFound();
-            }
 
             return View(pasoTratamiento);
         }
 
-        // POST: PasoTratamiento/Delete/5
-        // Elimina definitivamente el paso tratamiento (tras la confirmacion)
+        
+        // Elimina un paso de tratamiento de forma definitiva
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var pasoTratamiento = await _context.PasoTratamientos.FindAsync(id);
             if (pasoTratamiento != null)
-            {
                 _context.PasoTratamientos.Remove(pasoTratamiento);
-            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        // Verifica si un paso de tratamiento con ese ID existe
+        // Verifica si existe un paso de tratamiento con el ID indicado
         private bool PasoTratamientoExists(Guid id)
         {
             return _context.PasoTratamientos.Any(e => e.IdPaso == id);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,35 +18,32 @@ namespace DentAssist.Controllers
             _context = context;
         }
 
-
-        // GET: Turno
-        // Muestra la lista de todos los turnos con sus odontólogos y pacientes
+        // Muestra la lista de todos los turnos junto con sus odontólogos y pacientes
         public async Task<IActionResult> Index()
         {
             ViewData["OdontologoId"] = new SelectList(_context.Odontologos, "IdOdontologo", "Nombre");
             ViewBag.OdontologoId = new SelectList(_context.Odontologos, "IdOdontologo", "Nombre");
 
-            var appDbContext = _context.Turnos.Include(t => t.Odontologo).Include(t => t.Paciente);
-            return View(await appDbContext.ToListAsync());
+            var turnos = _context.Turnos
+                .Include(t => t.Odontologo)
+                .Include(t => t.Paciente);
+
+            return View(await turnos.ToListAsync());
         }
 
-        // GET: Turno/Details/5
         // Muestra los detalles de un turno específico
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var turno = await _context.Turnos
                 .Include(t => t.Odontologo)
                 .Include(t => t.Paciente)
-                .FirstOrDefaultAsync(m => m.IdTurno == id);
+                .FirstOrDefaultAsync(t => t.IdTurno == id);
+
             if (turno == null)
-            {
                 return NotFound();
-            }
 
             return View(turno);
         }
@@ -56,9 +52,7 @@ namespace DentAssist.Controllers
         public async Task<IActionResult> MisTurnos(Guid? idOdontologo)
         {
             if (idOdontologo == null)
-            {
                 return BadRequest("Debes proporcionar un ID de odontólogo.");
-            }
 
             var turnos = await _context.Turnos
                 .Include(t => t.Paciente)
@@ -67,18 +61,19 @@ namespace DentAssist.Controllers
                 .OrderBy(t => t.FechaHora)
                 .ToListAsync();
 
-            ViewData["NombreOdontologo"] = _context.Odontologos
+            ViewData["NombreOdontologo"] = await _context.Odontologos
                 .Where(o => o.IdOdontologo == idOdontologo)
                 .Select(o => o.Nombre)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return View("MisTurnos", turnos);
         }
 
-
+        // Muestra los turnos a partir de hoy en adelante
         public async Task<IActionResult> TurnosProximos()
         {
             var hoy = DateTime.Today;
+
             var turnos = await _context.Turnos
                 .Include(t => t.Odontologo)
                 .Include(t => t.Paciente)
@@ -89,9 +84,7 @@ namespace DentAssist.Controllers
             return View(turnos);
         }
 
-
-        // GET: Turno/Create
-        // Muestra el formulario para registrar un nuevo turno
+        // Muestra el formulario para crear un nuevo turno
         public IActionResult Create()
         {
             ViewData["IdOdontologo"] = new SelectList(_context.Odontologos, "IdOdontologo", "Nombre");
@@ -99,11 +92,7 @@ namespace DentAssist.Controllers
             return View();
         }
 
-
-        // POST: Turno/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // Procesa el registro de un nuevo turno (POST)
+        // Procesa el formulario de creación de un nuevo turno
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdTurno,FechaHora,DuracionMinutos,Estado,IdPaciente,IdOdontologo")] Turno turno)
@@ -127,91 +116,74 @@ namespace DentAssist.Controllers
             turno.IdTurno = Guid.NewGuid();
             _context.Add(turno);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-
-        // GET: Turno/Edit/5
         // Muestra el formulario para editar un turno existente
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var turno = await _context.Turnos.FindAsync(id);
             if (turno == null)
-            {
                 return NotFound();
-            }
+
             ViewData["IdOdontologo"] = new SelectList(_context.Odontologos, "IdOdontologo", "Nombre", turno.IdOdontologo);
             ViewData["IdPaciente"] = new SelectList(_context.Pacientes, "IdPaciente", "Nombre", turno.IdPaciente);
             return View(turno);
         }
 
-        // POST: Turno/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // Procesa la edición del turno (POST)
+        // Procesa la edición de un turno
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("IdTurno,FechaHora,DuracionMinutos,Estado,IdPaciente,IdOdontologo")] Turno turno)
         {
             if (id != turno.IdTurno)
-            {
                 return NotFound();
-            }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(turno);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TurnoExists(turno.IdTurno))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                ViewData["IdOdontologo"] = new SelectList(_context.Odontologos, "IdOdontologo", "Nombre", turno.IdOdontologo);
+                ViewData["IdPaciente"] = new SelectList(_context.Pacientes, "IdPaciente", "Nombre", turno.IdPaciente);
+                return View(turno);
             }
 
-            ViewData["IdOdontologo"] = new SelectList(_context.Odontologos, "IdOdontologo", "Nombre", turno.IdOdontologo);
-            ViewData["IdPaciente"] = new SelectList(_context.Pacientes, "IdPaciente", "Nombre", turno.IdPaciente);
-            return View(turno);
+            try
+            {
+                _context.Update(turno);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TurnoExists(turno.IdTurno))
+                    return NotFound();
+                else
+                    throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Turno/Delete/5
-        // Muestra la vista para confirmar la eliminación de un turno
+        // Muestra la vista para confirmar eliminación de un turno
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var turno = await _context.Turnos
                 .Include(t => t.Odontologo)
                 .Include(t => t.Paciente)
-                .FirstOrDefaultAsync(m => m.IdTurno == id);
+                .FirstOrDefaultAsync(t => t.IdTurno == id);
+
             if (turno == null)
-            {
                 return NotFound();
-            }
 
             return View(turno);
         }
 
-        // POST: Turno/Delete/5
-        // Elimina un turno de la base de datos (POST)
+        // Elimina un turno de forma definitiva
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -220,16 +192,16 @@ namespace DentAssist.Controllers
             if (turno != null)
             {
                 _context.Turnos.Remove(turno);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        // Verifica si un turno existe por su ID
+        // Verifica si un turno existe según su ID
         private bool TurnoExists(Guid id)
         {
-            return _context.Turnos.Any(e => e.IdTurno == id);
+            return _context.Turnos.Any(t => t.IdTurno == id);
         }
     }
 }

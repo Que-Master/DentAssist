@@ -34,13 +34,45 @@
     <main role="main" class="container pb-4">
         @RenderBody()
     </main>
+  <footer class="bg-primary text-white mt-auto pt-4 pb-3 shadow-sm">
+    <div class="container">
+        <div class="row">
+            <!-- Sección: Acerca de -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase fw-bold">DentAssist</h5>
+                <p>
+                    Plataforma odontológica diseñada para gestionar pacientes, turnos y tratamientos clínicos de forma eficiente, segura y profesional.
+                </p>
+            </div>
 
-    <footer class="text-center text-muted py-3 mt-auto" style="background-color: #e0f0ff;">
-        <small>
-            © 2025 - DentAssist · Sistema de Gestión Odontológica |
-            <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-muted">Privacidad</a>
-        </small>
-    </footer>
+            <!-- Sección: Enlaces -->
+            <div class="col-md-4 mb-4">
+                <h6 class="fw-bold">Enlaces útiles</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-white text-decoration-none"><i class="bi bi-house-door-fill me-1"></i>Inicio</a></li>
+                    <li><a href="/Home/Privacy" class="text-white text-decoration-none"><i class="bi bi-shield-lock-fill me-1"></i>Privacidad</a></li>
+                    <li><a href="/Administrador/Login" class="text-white text-decoration-none"><i class="bi bi-person-lock me-1"></i>Administrador</a></li>
+                    <li><a href="/Odontologo/Login" class="text-white text-decoration-none"><i class="bi bi-person-circle me-1"></i>Odontólogo</a></li>
+                    <li><a href="/Recepcionista/Login" class="text-white text-decoration-none"><i class="bi bi-clipboard-data me-1"></i>Recepcionista</a></li>
+                </ul>
+            </div>
+
+            <!-- Sección: Contacto -->
+            <div class="col-md-4 mb-4">
+                <h6 class="fw-bold">Contacto</h6>
+                <p><i class="bi bi-envelope-fill me-2"></i> contacto@dentassist.cl</p>
+                <p><i class="bi bi-telephone-fill me-2"></i> +56 9 1234 5678</p>
+                <p><i class="bi bi-geo-alt-fill me-2"></i> Santiago, Chile</p>
+            </div>
+        </div>
+
+        <hr class="border-light" />
+        <div class="text-center small">
+            © 2025 DentAssist · Todos los derechos reservados.
+        </div>
+    </div>
+</footer>
+
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

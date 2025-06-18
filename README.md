@@ -1,13 +1,13 @@
 ───────────────────────────────────────────────
 
-DentAssist - Sistema de Gestión Odontológica
-DentAssist es una aplicación web desarrollada en ASP.NET Core MVC para facilitar la gestión clínica de centros odontológicos. Permite a administradores, odontólogos y recepcionistas gestionar pacientes, turnos, tratamientos y planes de tratamiento de manera eficiente.
+# DentAssist - Sistema de Gestión Odontológica
+# DentAssist es una aplicación web desarrollada en ASP.NET Core MVC para facilitar la gestión clínica de centros odontológicos. Permite a administradores, odontólogos y recepcionistas gestionar pacientes, turnos, tratamientos y planes de tratamiento de manera eficiente.
 
 ────────────────────────────
 
-##🧰 Tecnologías utilizadas
+# 🧰 Tecnologías utilizadas
 
-#ASP.NET Core MVC
+ASP.NET Core MVC
 
 #Entity Framework Core
 

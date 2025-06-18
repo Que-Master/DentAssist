@@ -83,13 +83,15 @@ Este administrador puede crear odontólogos y recepcionistas desde el panel de a
 
 # 🧭 Uso
 
-Accede a la URL local (ejemplo: https://localhost:5001/)
+Accede a la URL local (ejemplo: https://localhost:5001/).
 
-Selecciona el tipo de usuario: Administrador, Odontólogo o Recepcionista
+Selecciona el tipo de usuario: Administrador, Odontólogo o Recepcionista.
 
 Inicia sesión.
 
-Utiliza el menú según tu rol para acceder a las funcionalidades.
+⚠️ En el primer uso, debes iniciar sesión como Administrador con las credenciales por defecto para poder crear los usuarios Odontólogo y Recepcionista. Estos usuarios no existen hasta que los registre el Administrador.
+
+Utiliza el menú según tu rol para acceder a las funcionalidades disponibles.
 
 ───────────────────────────────────────────────
 # 📋 Funcionalidades por rol

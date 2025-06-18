@@ -44,12 +44,12 @@ git clone https://github.com/tuusuario/dentassist.git
 Abre el proyecto con Visual Studio.
 
 Configura la cadena de conexión en el archivo appsettings.json:
-──────────────────────────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────
 "ConnectionStrings": {
 "DefaultConnection": "Server=NOMBRE_DEL_SERVIDOR;Database=DentAssistDB;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
-──────────────────────────────────────────────────────────────────────────────────────────────
-Reemplaza NOMBRE_DEL_SERVIDOR por el nombre de tu servidor SQL. Puedes encontrarlo al abrir SSMS en el campo “Servidor”.
+───────────────────────────────────────────────
+**Reemplaza NOMBRE_DEL_SERVIDOR por el nombre de tu servidor SQL. Puedes encontrarlo al abrir SSMS en el campo “Servidor”.**
 
 Ejecuta las migraciones para crear la base de datos:
 
@@ -65,7 +65,7 @@ Ejecuta el proyecto desde Visual Studio (F5 o Ctrl+F5).
 
 ────────────────────────────
 
-🔐 Datos iniciales
+# 🔐 Datos iniciales
 
 El sistema incluye un usuario administrador por defecto para facilitar la puesta en marcha.
 
@@ -78,7 +78,7 @@ Este administrador puede crear odontólogos y recepcionistas desde el panel de a
 
 ────────────────────────────
 
-🧭 Uso
+# 🧭 Uso
 
 Accede a la URL local (ejemplo: https://localhost:5001/)
 
@@ -90,9 +90,9 @@ Utiliza el menú según tu rol para acceder a las funcionalidades.
 
 ────────────────────────────
 
-📋 Funcionalidades por rol
+# 📋 Funcionalidades por rol
 
-👨‍💼 Administrador:
+**👨‍💼 Administrador:**
 
 Gestión de odontólogos
 
@@ -104,7 +104,7 @@ Gestión de tratamientos
 
 Gestión de turnos
 
-🦷 Odontólogo:
+**🦷 Odontólogo:**
 
 Consulta de turnos asignados
 
@@ -114,7 +114,7 @@ Visualización de historial clínico
 
 Avance de tratamientos por pasos
 
-📋 Recepcionista:
+**📋 Recepcionista:**
 
 Administración de turnos
 
@@ -124,7 +124,7 @@ Visualización de turnos próximos
 
 ────────────────────────────
 
-📫 Contacto
+**📫 Contacto**
 
 Si tienes dudas o sugerencias, puedes escribirnos a:
 contacto@dentassist.cl

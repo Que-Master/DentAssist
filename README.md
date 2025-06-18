@@ -5,15 +5,15 @@ DentAssist es una aplicación web desarrollada en ASP.NET Core MVC para facilita
 
 ────────────────────────────
 
-🧰 Tecnologías utilizadas
+##🧰 Tecnologías utilizadas
 
-ASP.NET Core MVC
+#ASP.NET Core MVC
 
-Entity Framework Core
+#Entity Framework Core
 
-SQL Server 2022
+#SQL Server 2022
 
-SQL Server Management Studio (SSMS)
+#SQL Server Management Studio (SSMS)
 
 Bootstrap 5
 
@@ -44,11 +44,11 @@ git clone https://github.com/tuusuario/dentassist.git
 Abre el proyecto con Visual Studio.
 
 Configura la cadena de conexión en el archivo appsettings.json:
-
+───────────────────────────────────────────────
 "ConnectionStrings": {
 "DefaultConnection": "Server=NOMBRE_DEL_SERVIDOR;Database=DentAssistDB;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
-
+───────────────────────────────────────────────
 Reemplaza NOMBRE_DEL_SERVIDOR por el nombre de tu servidor SQL. Puedes encontrarlo al abrir SSMS en el campo “Servidor”.
 
 Ejecuta las migraciones para crear la base de datos:

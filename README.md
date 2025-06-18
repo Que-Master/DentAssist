@@ -1,7 +1,7 @@
 ───────────────────────────────────────────────
 
 # DentAssist - Sistema de Gestión Odontológica
-# DentAssist es una aplicación web desarrollada en ASP.NET Core MVC para facilitar la gestión clínica de centros odontológicos. Permite a administradores, odontólogos y recepcionistas gestionar pacientes, turnos, tratamientos y planes de tratamiento de manera eficiente.
+**DentAssist es una aplicación web desarrollada en ASP.NET Core MVC para facilitar la gestión clínica de centros odontológicos. Permite a administradores, odontólogos y recepcionistas gestionar pacientes, turnos, tratamientos y planes de tratamiento de manera eficiente.**
 
 ────────────────────────────
 
@@ -23,7 +23,7 @@ C#
 
 ────────────────────────────
 
-🚀 Instalación y ejecución
+# 🚀 Instalación y ejecución
 
 Requisitos:
 
@@ -44,11 +44,11 @@ git clone https://github.com/tuusuario/dentassist.git
 Abre el proyecto con Visual Studio.
 
 Configura la cadena de conexión en el archivo appsettings.json:
-───────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────
 "ConnectionStrings": {
 "DefaultConnection": "Server=NOMBRE_DEL_SERVIDOR;Database=DentAssistDB;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
-───────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────
 Reemplaza NOMBRE_DEL_SERVIDOR por el nombre de tu servidor SQL. Puedes encontrarlo al abrir SSMS en el campo “Servidor”.
 
 Ejecuta las migraciones para crear la base de datos:

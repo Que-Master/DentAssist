@@ -44,13 +44,13 @@ Abre el proyecto con Visual Studio.
 
 Configura la cadena de conexión en el archivo appsettings.json:
 
-───────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────
 
 "ConnectionStrings": {
 "DefaultConnection": "Server=NOMBRE_DEL_SERVIDOR;Database=DentAssistDB;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
 
-───────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────
 
 **Reemplaza NOMBRE_DEL_SERVIDOR por el nombre de tu servidor SQL. Puedes encontrarlo al abrir SSMS en el campo “Servidor”.**
 
